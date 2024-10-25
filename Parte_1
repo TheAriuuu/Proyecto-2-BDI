@@ -91,5 +91,5 @@ CREATE TABLE Delito_cometido (
     FOREIGN KEY (ID_Delito) REFERENCES Delito(ID_Delito),
     FOREIGN KEY (ID_Victima) REFERENCES Victima(ID_victima),
     FOREIGN KEY (ID_Edad) REFERENCES Edad(ID_edad),
-    FOREIGN KEY (ID_Canton) REFERENCES Canton(ID_Canton)
+    FOREIGN KEY (ID_Canton) REFERENCES Cantones(ID_Canton)
 );
