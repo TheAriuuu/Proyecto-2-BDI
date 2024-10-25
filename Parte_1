@@ -147,3 +147,7 @@ SELECT LOWER(TRIM(canton)), ID_Provincia
 FROM oij_temp, provincias
 where LOWER(TRIM(provincia)) = provincias.nombre_provincia
 on conflict do nothing;
+
+insert into nacionalidad (nombre) 
+select nacionalidad from oij_temp
+on conflict do nothing;
