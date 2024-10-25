@@ -1,3 +1,4 @@
+--1.1
 CREATE TABLE  OIJ_TEMP (
     delito varchar(1000), 
     subdelito varchar(1000), 
@@ -36,3 +37,5 @@ create table  INEC_TEMP(
 );
 
 
+
+--1.2
