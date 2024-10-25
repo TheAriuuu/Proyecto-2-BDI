@@ -132,3 +132,10 @@ insert into provincias(nombre_provincia)
 SELECT DISTINCT lower(TRIM(provincia)) 
 FROM oij_temp
 ON CONFLICT (nombre_provincia) DO NOTHING; 
+
+
+INSERT INTO cantones (nombre, id_provincia)
+SELECT LOWER(TRIM(canton)), ID_Provincia
+FROM oij_temp, provincias
+where LOWER(TRIM(provincia)) = provincias.nombre_provincia
+on conflict do nothing;
