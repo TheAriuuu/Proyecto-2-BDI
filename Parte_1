@@ -127,7 +127,7 @@ create table porcentajes (
 	constraint fk_canton foreign key (ID_canton) references Cantones(ID_canton)
 );
 
-
+--Normalización
 insert into provincias(nombre_provincia) 
 SELECT DISTINCT lower(TRIM(provincia)) 
 FROM oij_temp
