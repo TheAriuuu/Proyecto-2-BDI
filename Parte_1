@@ -126,3 +126,9 @@ create table porcentajes (
 	sector_terciario float not null,
 	constraint fk_canton foreign key (ID_canton) references Cantones(ID_canton)
 );
+
+
+insert into provincias(nombre_provincia) 
+SELECT DISTINCT lower(TRIM(provincia)) 
+FROM oij_temp
+ON CONFLICT (nombre_provincia) DO NOTHING; 
