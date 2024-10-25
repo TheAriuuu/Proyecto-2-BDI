@@ -151,3 +151,7 @@ on conflict do nothing;
 insert into nacionalidad (nombre) 
 select nacionalidad from oij_temp
 on conflict do nothing;
+
+insert into genero (tipo)
+	select genero from oij_temp
+	on conflict do nothing;
