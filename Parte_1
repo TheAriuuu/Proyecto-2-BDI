@@ -1,1 +1,38 @@
+CREATE TABLE  OIJ_TEMP (
+    delito varchar(1000), 
+    subdelito varchar(1000), 
+    fecha varchar(1000), 
+	hora varchar(1000),
+    victima varchar(1000), 
+    subvictima varchar(1000), 
+    edad varchar(1000), 
+    genero varchar(1000), 
+    nacionalidad varchar(1000), 
+    provincia varchar(1000), 
+    canton varchar(1000), 
+    distrito varchar(1000)
+);
+
+COPY oij_temp 
+FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documentation\oij.csv' 
+DELIMITER ',' 
+CSV HEADER;
+
+ALTER TABLE  
+DROP COLUMN distrito;
+
+
+create table  INEC_TEMP(
+	canton_o_distrito varchar(1000),
+	quinceanios_o_mas int,
+	participacion float,
+	ocupacion float,
+	desempleo float,
+	inactivos_economicos float,
+	dependencia_economica float,
+	primario float,
+	secundario float,
+	terciario float
+);
+
 
