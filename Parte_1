@@ -140,6 +140,26 @@ create table  OIJ_INEC.porcentajes (
 	constraint fk_canton foreign key (ID_canton) references OIJ_INEC.Cantones(ID_canton)
 );
 
+
+-- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
+no coinciden con ningún cantón del conjunto de datos del Inec. --
+SELECT DISTINCT
+    c.nombre AS canton
+FROM oij_inec.Cantones c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM INEC_TEMP it
+    WHERE c.nombre=it.provincia_canton
+)
+
+AND LOWER(c.nombre) NOT LIKE '%provincia%'
+AND LOWER(c.nombre) NOT LIKE '%costa rica%';
+
+-- Cantón que hacía falta insertar en la tabla cantones --
+insert into oij_inec.Cantones(nombre, Id_provincia) values
+('valverde vega', 2)
+
+
 --Normalización
 insert into OIJ_INEC.provincias(nombre_provincia) 
 SELECT DISTINCT provincia 
@@ -160,24 +180,6 @@ on conflict do nothing;
 insert into OIJ_INEC.genero (tipo)
 	select genero from oij_temp
 	on conflict do nothing;
-
--- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
-no coinciden con ningún cantón del conjunto de datos del Inec. --
-SELECT DISTINCT
-    c.nombre AS canton
-FROM oij_inec.Cantones c
-WHERE NOT EXISTS (
-    SELECT 1 
-    FROM INEC_TEMP it
-    WHERE c.nombre=it.provincia_canton
-)
-
-AND LOWER(c.nombre) NOT LIKE '%provincia%'
-AND LOWER(c.nombre) NOT LIKE '%costa rica%';
-
--- Cantón que hacía falta insertar en la tabla cantones --
-insert into oij_inec.Cantones(nombre, Id_provincia) values
-('valverde vega', 2)
 
 INSERT INTO OIJ_INEC.porcentajes (
     ID_canton, mayores_De_14, tasa_participacion, tasa_ocupacion, tasa_desempleo,
