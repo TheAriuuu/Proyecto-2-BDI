@@ -49,6 +49,10 @@ SET provincia = TRIM(LOWER(provincia));
 UPDATE inec_temp
 SET provincia_canton = TRIM(LOWER(provincia_canton));
 
+UPDATE inec_TEMP
+SET provincia_canton = TRANSLATE(provincia_canton, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU');
+
+
 --1.2
 CREATE SCHEMA OIJ_INEC;
 
