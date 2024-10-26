@@ -215,6 +215,6 @@ on conflict do nothing;
 
 
 insert into oij_inec.subvictima (tipo_subvictima)
-select subdelito
+select subvictima
 from oij_temp
 on conflict do nothing;
