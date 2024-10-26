@@ -224,3 +224,19 @@ select oij_temp.victima, oij_inec.subvictima.id_subvictima
 from oij_temp, oij_inec.subvictima 
 where oij_inec.subvictima.tipo_subvictima = oij_temp.subvictima
 on conflict do nothing;
+
+insert into oij_inec.delito_cometido (ID_Delito, Fecha, Hora, ID_Victima, ID_Edad, ID_Genero, ID_Nacionalidad, ID_Canton)
+select oij_inec.delito.id_delito, TO_DATE(oij_temp.fecha, 'YYYY-MM-DD'), oij_temp.hora, oij_inec.victima.id_victima, oij_inec.edad.id_edad, oij_inec.genero.id_genero, oij_inec.nacionalidad.id_nacionalidad, oij_inec.cantones.id_canton
+from oij_temp, oij_inec.delito, oij_inec.subdelito, oij_inec.victima,  oij_inec.edad, oij_inec.genero, oij_inec.nacionalidad, oij_inec.cantones, oij_inec.provincias, oij_inec.subvictima
+where oij_temp.delito = oij_inec.delito.tipo_delito
+and oij_temp.subdelito = oij_inec.subdelito.tipo_subdelito
+and oij_temp.victima =  oij_inec.victima.tipo_victima
+and oij_temp.subvictima = oij_inec.subvictima.tipo_subvictima
+and oij_temp.edad =  oij_inec.edad.edad
+and oij_temp.genero = oij_inec.genero.tipo
+and oij_temp.nacionalidad = oij_inec.nacionalidad.nombre
+and oij_temp.provincia = oij_inec.provincias.nombre_provincia
+and oij_temp.canton = oij_inec.cantones.nombre
+and oij_inec.subvictima.id_subvictima = oij_inec.victima.id_subvictima
+and oij_inec.delito.id_subdelito = oij_inec.subdelito.id_subdelito
+and oij_inec.cantones.id_provincia = oij_inec.provincias.id_provincia;
