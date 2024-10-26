@@ -142,15 +142,15 @@ create table  OIJ_INEC.porcentajes (
 
 --Normalización
 insert into OIJ_INEC.provincias(nombre_provincia) 
-SELECT DISTINCT lower(TRIM(provincia)) 
+SELECT DISTINCT provincia 
 FROM oij_temp
 ON CONFLICT (nombre_provincia) DO NOTHING; 
 
 
 INSERT INTO OIJ_INEC.cantones (nombre, id_provincia)
-SELECT LOWER(TRIM(canton)), ID_Provincia
+SELECT canton, ID_Provincia
 FROM oij_temp, OIJ_INEC.provincias
-where LOWER(TRIM(provincia)) = OIJ_INEC.provincias.nombre_provincia
+where provincia = OIJ_INEC.provincias.nombre_provincia
 on conflict do nothing;
 
 insert into OIJ_INEC.nacionalidad (nombre) 
