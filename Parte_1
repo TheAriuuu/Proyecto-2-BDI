@@ -40,7 +40,14 @@ FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documen
 DELIMITER ',' 
 CSV HEADER;
 
+UPDATE OIJ_TEMP
+SET canton = TRIM(LOWER(canton));
 
+UPDATE OIJ_TEMP
+SET provincia = TRIM(LOWER(provincia));
+
+UPDATE inec_temp
+SET provincia_canton = TRIM(LOWER(provincia_canton));
 
 --1.2
 CREATE SCHEMA OIJ_INEC;
