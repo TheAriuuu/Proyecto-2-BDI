@@ -195,5 +195,5 @@ SELECT
     it.sector_secundario, 
     it.sector_terciario
 FROM INEC_TEMP it
-JOIN Cantones c 
-ON LOWER(TRIM(TRANSLATE(c.nombre, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn'))) = LOWER(TRIM(TRANSLATE(REGEXP_SUBSTR(it.provincia_canton, '[^,]+'), 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn')));
+JOIN oij_inec.Cantones c 
+ON c.nombre= REGEXP_SUBSTR(it.provincia_canton, '[^,]+');
