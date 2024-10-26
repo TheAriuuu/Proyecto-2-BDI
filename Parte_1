@@ -165,12 +165,13 @@ insert into OIJ_INEC.genero (tipo)
 no coinciden con ningún cantón del conjunto de datos del Inec. --
 SELECT DISTINCT
     c.nombre AS canton
-FROM Cantones c
+FROM oij_inec.Cantones c
 WHERE NOT EXISTS (
     SELECT 1 
     FROM INEC_TEMP it
-    WHERE LOWER(TRIM(TRANSLATE(c.nombre, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn'))) = LOWER(TRIM(TRANSLATE(REGEXP_SUBSTR(it.provincia_canton, '[^,]+'), 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn')))
+    WHERE c.nombre=it.provincia_canton
 )
+
 AND LOWER(c.nombre) NOT LIKE '%provincia%'
 AND LOWER(c.nombre) NOT LIKE '%costa rica%';
 
