@@ -212,3 +212,9 @@ select oij_temp.delito, oij_inec.subdelito.id_subdelito
 from oij_temp, oij_inec.subdelito
 where oij_temp.subdelito = oij_inec.subdelito.tipo_subdelito
 on conflict do nothing;
+
+
+insert into oij_inec.subvictima (tipo_subvictima)
+select subdelito
+from oij_temp
+on conflict do nothing;
