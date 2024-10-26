@@ -218,3 +218,9 @@ insert into oij_inec.subvictima (tipo_subvictima)
 select subvictima
 from oij_temp
 on conflict do nothing;
+
+insert into oij_inec.victima ( tipo_victima, id_subvictima)
+select oij_temp.victima, oij_inec.subvictima.id_subvictima
+from oij_temp, oij_inec.subvictima 
+where oij_inec.subvictima.tipo_subvictima = oij_temp.subvictima
+on conflict do nothing;
