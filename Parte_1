@@ -130,15 +130,7 @@ create table  OIJ_INEC.porcentajes (
 );
 
 --Normalización
-CREATE INDEX idx_id_provincia ON provincias(id_provincia);
-
-
-CREATE INDEX indice_nombre_provincia ON provincias(nombre_provincia);
-
-
-CREATE INDEX indice_nombre_provincia_temp ON oij_temp(provincia);
-
-insert into provincias(nombre_provincia) 
+insert into OIJ_INEC.provincias(nombre_provincia) 
 SELECT DISTINCT lower(TRIM(provincia)) 
 FROM oij_temp
 ON CONFLICT (nombre_provincia) DO NOTHING; 
