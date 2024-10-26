@@ -176,7 +176,7 @@ AND LOWER(c.nombre) NOT LIKE '%provincia%'
 AND LOWER(c.nombre) NOT LIKE '%costa rica%';
 
 -- Cantón que hacía falta insertar en la tabla cantones --
-insert into Cantones(nombre, Id_provincia) values
+insert into oij_inec.Cantones(nombre, Id_provincia) values
 ('valverde vega', 2)
 
 INSERT INTO OIJ_INEC.porcentajes (
