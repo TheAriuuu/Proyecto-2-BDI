@@ -149,3 +149,39 @@ on conflict do nothing;
 insert into OIJ_INEC.genero (tipo)
 	select genero from oij_temp
 	on conflict do nothing;
+
+-- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
+no coinciden con ningún cantón del conjunto de datos del Inec. --
+SELECT DISTINCT
+    c.nombre AS canton
+FROM Cantones c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM INEC_TEMP it
+    WHERE LOWER(TRIM(TRANSLATE(c.nombre, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn'))) = LOWER(TRIM(TRANSLATE(REGEXP_SUBSTR(it.provincia_canton, '[^,]+'), 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn')))
+)
+AND LOWER(c.nombre) NOT LIKE '%provincia%'
+AND LOWER(c.nombre) NOT LIKE '%costa rica%';
+
+-- Cantón que hacía falta insertar en la tabla cantones --
+insert into Cantones(nombre, Id_provincia) values
+('valverde vega', 2)
+
+INSERT INTO porcentajes (
+    ID_canton, mayores_De_14, tasa_participacion, tasa_ocupacion, tasa_desempleo,
+    economicamente_inactivos, dependencia_economica, sector_primario, sector_secundario, sector_terciario
+)
+SELECT 
+    c.ID_Canton,
+    it.poblacion_15_mas, 
+    it.tasa_participacion, 
+    it.tasa_ocupacion, 
+    it.tasa_desempleo, 
+    it.porcentaje_inactiva, 
+    it.relacion_dependencia, 
+    it.sector_primario, 
+    it.sector_secundario, 
+    it.sector_terciario
+FROM INEC_TEMP it
+JOIN Cantones c 
+ON LOWER(TRIM(TRANSLATE(c.nombre, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn'))) = LOWER(TRIM(TRANSLATE(REGEXP_SUBSTR(it.provincia_canton, '[^,]+'), 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn')));
