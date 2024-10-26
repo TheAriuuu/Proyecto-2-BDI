@@ -199,3 +199,7 @@ SELECT
 FROM INEC_TEMP it
 JOIN oij_inec.Cantones c 
 ON c.nombre= REGEXP_SUBSTR(it.provincia_canton, '[^,]+');
+
+insert into oij_inec.edad (edad) 
+select edad from oij_temp
+on conflict do nothing;
