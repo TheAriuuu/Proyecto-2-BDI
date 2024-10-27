@@ -50,7 +50,7 @@ UPDATE inec_temp
 SET provincia_canton = TRIM(LOWER(provincia_canton));
 
 UPDATE inec_TEMP
-SET provincia_canton = TRANSLATE(provincia_canton, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU');
+SET provincia_canton = TRANSLATE(provincia_canton, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn');
 
 
 --1.2
