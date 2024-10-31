@@ -1,2 +1,11 @@
 CREATE SCHEMA DATAMART;
 
+create table DATAMART.GENDER ();
+
+create table DATAMART.DATE();
+
+create table DATAMART.SITE();
+
+create table DATAMART.CRIME();
+
+create table DATAMART.OIJ_INEC_FACT();
