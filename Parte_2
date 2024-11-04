@@ -36,4 +36,7 @@ create table DATAMART.OIJ_INEC_FACT(
 
 --Procedimientos almacenados
 
+insert into  DATAMART.GENDER (genero)
+	select tipo from oij_inec.genero
+	on conflict do nothing;
 
