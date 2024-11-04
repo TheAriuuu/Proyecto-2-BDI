@@ -62,3 +62,17 @@ END;
 $$;
 
 call InsertDateToDatamart();
+
+CREATE OR REPLACE PROCEDURE InsertSiteToDatamart()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO DATAMART.Site (provincia, canton)
+    SELECT p.nombre_provincia, c.nombre
+    FROM oij_inec.provincias p
+    JOIN oij_inec.cantones c ON p.id_provincia = c.id_provincia
+    ON CONFLICT (canton) DO NOTHING; 
+END;
+$$;
+
+call InsertSiteToDatamart();
