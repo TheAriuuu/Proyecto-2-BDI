@@ -40,3 +40,25 @@ insert into  DATAMART.GENDER (genero)
 	select tipo from oij_inec.genero
 	on conflict do nothing;
 
+CREATE OR REPLACE PROCEDURE InsertDateToDatamart()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    fecha_val DATE;
+BEGIN
+    FOR fecha_val IN SELECT DISTINCT Fecha FROM OIJ_INEC.Delito_cometido LOOP
+        BEGIN
+            INSERT INTO DATAMART.DATE (Fecha, dia, mes, anio)
+            VALUES (
+                fecha_val,
+                EXTRACT(DAY FROM fecha_val),
+                EXTRACT(MONTH FROM fecha_val),
+                EXTRACT(YEAR FROM fecha_val)
+            )
+            ON CONFLICT (Fecha) DO NOTHING; 
+        END;
+    END LOOP;
+END;
+$$;
+
+call InsertDateToDatamart();
