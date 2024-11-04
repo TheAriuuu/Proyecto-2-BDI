@@ -6,7 +6,7 @@ create table DATAMART.GENDER (
 );
 
 create table DATAMART.DATE(
-  Fecha date primary key not null,
+  Fecha date primary key not null unique,
   dia int not null,
   mes int not null,
   anio int not null
