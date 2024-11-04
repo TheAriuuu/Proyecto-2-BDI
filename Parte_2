@@ -32,3 +32,8 @@ create table DATAMART.OIJ_INEC_FACT(
   crime_count int not null,
   average_employment_rate float not null
 );
+
+
+--Procedimientos almacenados
+
+
