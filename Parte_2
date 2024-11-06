@@ -76,3 +76,16 @@ END;
 $$;
 
 call InsertSiteToDatamart();
+
+CREATE OR REPLACE PROCEDURE InsertCrimeToDatamart()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	INSERT INTO DATAMART.CRIME (delito)
+	SELECT d.tipo_delito
+	FROM oij_inec.delito d
+	ON CONFLICT (delito) DO NOTHING;
+END;
+$$;
+
+call InsertCrimeToDatamart();
