@@ -143,6 +143,7 @@ create table  OIJ_INEC.porcentajes (
 
 -- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
 no coinciden con ningún cantón del conjunto de datos del Inec. --
+
 SELECT DISTINCT
     c.nombre AS canton
 FROM oij_inec.Cantones c
@@ -161,26 +162,61 @@ insert into oij_inec.Cantones(nombre, Id_provincia) values
 
 
 --Normalización
+CREATE OR REPLACE PROCEDURE InsertProvinciasToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into OIJ_INEC.provincias(nombre_provincia) 
 SELECT DISTINCT provincia 
 FROM oij_temp
 ON CONFLICT (nombre_provincia) DO NOTHING; 
+END;
+$$;
 
+call InsertProvinciasToOIJ_INEC();
 
+CREATE OR REPLACE PROCEDURE InsertCantonesToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 INSERT INTO OIJ_INEC.cantones (nombre, id_provincia)
 SELECT canton, ID_Provincia
 FROM oij_temp, OIJ_INEC.provincias
 where provincia = OIJ_INEC.provincias.nombre_provincia
 on conflict do nothing;
+END;
+$$;
 
+call InsertCantonesToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertNacionalidadesToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into OIJ_INEC.nacionalidad (nombre) 
 select nacionalidad from oij_temp
 on conflict do nothing;
+END;
+$$;
 
+call InsertNacionalidadesToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertGeneroToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into OIJ_INEC.genero (tipo)
 	select genero from oij_temp
 	on conflict do nothing;
+END;
+$$;
 
+call InsertGeneroToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertPorcentajesToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 INSERT INTO OIJ_INEC.porcentajes (
     ID_canton, mayores_De_14, tasa_participacion, tasa_ocupacion, tasa_desempleo,
     economicamente_inactivos, dependencia_economica, sector_primario, sector_secundario, sector_terciario
@@ -199,32 +235,81 @@ SELECT
 FROM INEC_TEMP it
 JOIN oij_inec.Cantones c 
 ON c.nombre= REGEXP_SUBSTR(it.provincia_canton, '[^,]+');
+END;
+$$;
 
+call InsertPorcentajesToOIJ_INEC();
+
+
+
+CREATE OR REPLACE PROCEDURE InsertEdadToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.edad (edad) 
 select edad from oij_temp
 on conflict do nothing;
+END;
+$$;
 
+call InsertEdadToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertSubdelitoToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.subdelito (tipo_subdelito)
 select subdelito from oij_temp on conflict do nothing;
+END;
+$$;
 
+call InsertSubdelitoToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertDelitoToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.delito (tipo_delito, id_subdelito)
 select oij_temp.delito, oij_inec.subdelito.id_subdelito
 from oij_temp, oij_inec.subdelito
 where oij_temp.subdelito = oij_inec.subdelito.tipo_subdelito
 on conflict do nothing;
+END;
+$$;
 
+call InsertDelitoToOIJ_INEC();
 
+CREATE OR REPLACE PROCEDURE InsertSubvictimaToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.subvictima (tipo_subvictima)
 select subvictima
 from oij_temp
 on conflict do nothing;
+END;
+$$;
 
+call InsertSubvictimaToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertVictimaToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.victima ( tipo_victima, id_subvictima)
 select oij_temp.victima, oij_inec.subvictima.id_subvictima
 from oij_temp, oij_inec.subvictima 
 where oij_inec.subvictima.tipo_subvictima = oij_temp.subvictima
 on conflict do nothing;
+END;
+$$;
 
+call InsertVictimaToOIJ_INEC();
+
+CREATE OR REPLACE PROCEDURE InsertDelito_cometidoToOIJ_INEC()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into oij_inec.delito_cometido (ID_Delito, Fecha, Hora, ID_Victima, ID_Edad, ID_Genero, ID_Nacionalidad, ID_Canton)
 select oij_inec.delito.id_delito, TO_DATE(oij_temp.fecha, 'YYYY-MM-DD'), oij_temp.hora, oij_inec.victima.id_victima, oij_inec.edad.id_edad, oij_inec.genero.id_genero, oij_inec.nacionalidad.id_nacionalidad, oij_inec.cantones.id_canton
 from oij_temp, oij_inec.delito, oij_inec.subdelito, oij_inec.victima,  oij_inec.edad, oij_inec.genero, oij_inec.nacionalidad, oij_inec.cantones, oij_inec.provincias, oij_inec.subvictima
@@ -240,3 +325,7 @@ and oij_temp.canton = oij_inec.cantones.nombre
 and oij_inec.subvictima.id_subvictima = oij_inec.victima.id_subvictima
 and oij_inec.delito.id_subdelito = oij_inec.subdelito.id_subdelito
 and oij_inec.cantones.id_provincia = oij_inec.provincias.id_provincia;
+END;
+$$;
+
+call InsertDelito_cometidoToOIJ_INEC();
