@@ -40,10 +40,18 @@ UNIQUE (id_crime, fecha, id_gender, id_site)
 
 
 --Procedimientos almacenados
-
+CREATE OR REPLACE PROCEDURE InsertGenderToDatamart()
+LANGUAGE plpgsql
+AS $$
+BEGIN
 insert into  DATAMART.GENDER (genero)
 	select tipo from oij_inec.genero
 	on conflict do nothing;
+END;
+$$;
+
+call InsertGenderToDatamart();
+
 
 CREATE OR REPLACE PROCEDURE InsertDateToDatamart()
 LANGUAGE plpgsql
