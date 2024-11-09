@@ -102,3 +102,42 @@ END;
 $$;
 
 call InsertCrimeToDatamart();
+
+CREATE OR REPLACE PROCEDURE InsertFactToDatamart()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    record RECORD;
+BEGIN
+    FOR record IN
+        SELECT 
+            c.ID_Crime,
+            d.Fecha,
+            g.ID_Gender,
+            s.ID_Site,
+            COUNT(*) AS crime_count,
+            AVG(p.tasa_ocupacion) AS average_employment_rate
+        FROM DATAMART.CRIME c
+        JOIN OIJ_INEC.Delito_cometido dc ON dc.ID_Delito = c.ID_Crime
+        JOIN DATAMART.DATE d ON d.Fecha = dc.Fecha
+        JOIN DATAMART.GENDER g ON g.ID_Gender = dc.ID_Genero
+        JOIN DATAMART.SITE s ON s.ID_Site = (SELECT ID_Site FROM DATAMART.SITE WHERE canton = (SELECT nombre FROM OIJ_INEC.Cantones WHERE ID_Canton = dc.ID_Canton LIMIT 1))
+        JOIN OIJ_INEC.porcentajes p ON s.ID_Site = p.ID_canton
+        GROUP BY c.ID_Crime, d.Fecha, g.ID_Gender, s.ID_Site
+    LOOP
+        INSERT INTO DATAMART.OIJ_INEC_FACT (id_crime, fecha, id_gender, id_site, crime_count, average_employment_rate)
+        VALUES (
+            record.ID_Crime, 
+            record.Fecha, 
+            record.ID_Gender,
+            record.ID_Site,
+            record.crime_count,
+            record.average_employment_rate
+        )
+        ON CONFLICT (id_crime, fecha, id_gender, id_site) DO NOTHING;
+    END LOOP;
+END;
+$$;
+
+
+call InsertFactToDatamart();
