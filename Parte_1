@@ -156,9 +156,6 @@ WHERE NOT EXISTS (
 AND LOWER(c.nombre) NOT LIKE '%provincia%'
 AND LOWER(c.nombre) NOT LIKE '%costa rica%';
 
--- Cantón que hacía falta insertar en la tabla cantones --
-insert into oij_inec.Cantones(nombre, Id_provincia) values
-('valverde vega', 2)
 
 
 --Normalización
@@ -200,6 +197,11 @@ END;
 $$;
 
 call InsertNacionalidadesToOIJ_INEC();
+
+-- Cantón que hacía falta insertar en la tabla cantones --
+insert into oij_inec.Cantones(nombre, Id_provincia) values
+('valverde vega', 2)
+
 
 CREATE OR REPLACE PROCEDURE InsertGeneroToOIJ_INEC()
 LANGUAGE plpgsql
