@@ -1,17 +1,17 @@
 --1.1
 CREATE TABLE  OIJ_TEMP (
-    delito varchar(1000), 
-    subdelito varchar(1000), 
-    fecha varchar(1000), 
-    hora varchar(1000),
-    victima varchar(1000), 
-    subvictima varchar(1000), 
-    edad varchar(1000), 
-    genero varchar(1000), 
-    nacionalidad varchar(1000), 
-    provincia varchar(1000), 
-    canton varchar(1000), 
-    distrito varchar(1000)
+    delito varchar(255), 
+    subdelito varchar(255), 
+    fecha varchar(255), 
+    hora varchar(255),
+    victima varchar(255), 
+    subvictima varchar(255), 
+    edad varchar(255), 
+    genero varchar(255), 
+    nacionalidad varchar(255), 
+    provincia varchar(255), 
+    canton varchar(255), 
+    distrito varchar(255)
 );
 
 CREATE TABLE INEC_TEMP (
