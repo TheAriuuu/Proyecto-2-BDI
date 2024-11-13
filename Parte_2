@@ -1,3 +1,7 @@
+create table coordenadas_cantones_temp (provincia varchar(255), canton varchar(255), latitud float, longitud float);
+
+
+
 CREATE SCHEMA DATAMART;
 
 create table DATAMART.GENDER (
