@@ -1,0 +1,79 @@
+provincia,canton,latitud,longitud
+san jose,san jose,9.928069,-84.090725
+san jose,escazu,9.9187,-84.1399
+san jose,desamparados,9.8588,-84.0542
+san jose,puriscal,9.7513,-84.3456
+san jose,tarrazu,9.6658,-84.0213
+san jose,aserri,9.8607,-84.0925
+san jose,mora,9.9138,-84.2502
+san jose,goicoechea,9.9637,-84.0716
+san jose,santa ana,9.9299,-84.1836
+san jose,alajuelita,9.8939,-84.0988
+san jose,vasquez de coronado,10.0389,-84.0112
+san jose,acosta,9.7346,-84.2085
+san jose,tibas,9.9577,-84.0912
+san jose,moravia,9.9672,-84.0434
+san jose,montes de oca,9.9322,-84.0338
+san jose,turrubares,9.6877,-84.4489
+san jose,dota,9.6337,-83.9669
+san jose,curridabat,9.9156,-84.0325
+san jose,perez zeledon,9.3545,-83.7138
+san jose,leon cortes,9.6737,-84.0928
+alajuela,alajuela,10.0162,-84.2116
+alajuela,san ramon,10.0875,-84.4703
+alajuela,grecia,10.0737,-84.3143
+alajuela,san mateo,9.9556,-84.5193
+alajuela,atenas,9.9796,-84.3807
+alajuela,naranjo,10.1017,-84.3816
+alajuela,palmares,10.0517,-84.4294
+alajuela,poas,10.1138,-84.2367
+alajuela,orotina,9.9067,-84.5375
+alajuela,san carlos,10.3342,-84.4318
+alajuela,zarcero,10.1872,-84.4089
+alajuela,valverde vega,10.1718,-84.4324
+alajuela,upala,10.8528,-85.1708
+alajuela,los chiles,11.0333,-84.7179
+alajuela,guatuso,10.6669,-84.8338
+cartago,cartago,9.8644,-83.9194
+cartago,paraiso,9.8367,-83.8644
+cartago,la union,9.9085,-84.0268
+cartago,jimenez,9.7876,-83.7016
+cartago,turrialba,9.9042,-83.6835
+cartago,alvarado,9.8636,-83.8004
+cartago,oreamuno,9.9141,-83.8612
+heredia,heredia,10.0024,-84.1165
+heredia,barva,10.0248,-84.1188
+heredia,santo domingo,9.9802,-84.1019
+heredia,santa barbara,10.0786,-84.1483
+heredia,san rafael,10.0859,-84.1132
+heredia,san isidro,10.0919,-84.0451
+heredia,belen,9.9767,-84.1693
+heredia,flores,10.0019,-84.1467
+heredia,san pablo,9.9926,-84.1147
+guanacaste,liberia,10.6346,-85.4408
+guanacaste,nicoya,10.1472,-85.4523
+guanacaste,santa cruz,10.2603,-85.5857
+guanacaste,bagaces,10.5264,-85.2501
+guanacaste,canas,10.4312,-85.1022
+guanacaste,abangares,10.2807,-84.9846
+guanacaste,tilaran,10.4697,-84.8363
+guanacaste,nandayure,9.9263,-85.2764
+guanacaste,la cruz,11.0748,-85.6328
+guanacaste,hojancha,9.8896,-85.4067
+puntarenas,puntarenas,9.9763,-84.8383
+puntarenas,esparza,9.9903,-84.6647
+puntarenas,buenos aires,9.167,-83.3324
+puntarenas,montes de oro,10.0886,-84.7344
+puntarenas,osa,8.7014,-83.4828
+puntarenas,quepos,9.4319,-84.1617
+puntarenas,golfito,8.6413,-83.1644
+puntarenas,coto brus,8.954,-82.9924
+puntarenas,parrita,9.5215,-84.3219
+puntarenas,corredores,8.6394,-82.9398
+puntarenas,garabito,9.642,-84.6265
+limon,limon,9.9907,-83.0361
+limon,pococi,10.2167,-83.7842
+limon,siquirres,10.0974,-83.5074
+limon,talamanca,9.6295,-82.7821
+limon,matina,10.0667,-83.3457
+limon,guacimo,10.2077,-83.6753
