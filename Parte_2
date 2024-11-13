@@ -45,7 +45,7 @@ create table DATAMART.OIJ_INEC_FACT(
    FOREIGN KEY (fecha) REFERENCES DATAMART.DATE(fecha),
    FOREIGN KEY (id_site) REFERENCES  DATAMART.SITE(ID_Site),
    FOREIGN KEY (id_crime) REFERENCES DATAMART.CRIME(ID_Crime),
-  crime_count int not null,
+  crime_count int,
   average_employment_rate float,
 UNIQUE (id_crime, fecha, id_gender, id_site)
 );
