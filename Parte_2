@@ -92,10 +92,12 @@ CREATE OR REPLACE PROCEDURE InsertSiteToDatamart()
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    INSERT INTO DATAMART.Site (provincia, canton)
-    SELECT p.nombre_provincia, c.nombre
-    FROM oij_inec.provincias p
+    INSERT INTO DATAMART.Site (provincia, canton, latitud, longitud)
+    SELECT p.nombre_provincia, c.nombre, co.latitud, co.longitud
+    FROM  oij_inec.provincias p
     JOIN oij_inec.cantones c ON p.id_provincia = c.id_provincia
+	left join coordenadas_cantones_temp co on p.nombre_provincia = co.provincia
+	and c.nombre = co.canton
     ON CONFLICT (canton) DO NOTHING; 
 END;
 $$;
