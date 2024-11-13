@@ -1,5 +1,11 @@
 create table coordenadas_cantones_temp (provincia varchar(255), canton varchar(255), latitud float, longitud float);
 
+COPY coordenadas_cantones_temp FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documentation\coordenadas.txt' 
+WITH (
+    FORMAT text,
+    DELIMITER ',',
+    HEADER true
+);
 
 
 CREATE SCHEMA DATAMART;
