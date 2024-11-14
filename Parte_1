@@ -197,6 +197,9 @@ $$;
 
 call InsertNacionalidadesToOIJ_INEC();
 
+
+update oij_inec.cantones set nombre = 'sarchi' where nombre = 'sarch&#205;'
+
 -- Cantón que hacía falta insertar en la tabla cantones --
 insert into oij_inec.Cantones(nombre, Id_provincia) values
 ('valverde vega', 2)
