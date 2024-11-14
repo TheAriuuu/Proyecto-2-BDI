@@ -138,3 +138,25 @@ JOIN
     oij_inec.genero h ON dc.id_genero = h.id_genero
 GROUP BY 
     d.tipo_delito, c.nombre, dc.fecha, h.tipo;
+
+CREATE OR REPLACE PROCEDURE InsertFactToDatamart()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO datamart.oij_inec_fact (
+        id_gender, fecha, id_site, id_crime, crime_count,  average_employment_rate
+    )
+    SELECT 
+        g.id_gender,  v.fecha,  s.id_site,  c.id_crime, 
+        COALESCE(SUM(v.total_delitos), 0) AS crime_count, 
+        COALESCE(AVG(v.avg_tasa_ocupacion), 0) AS average_employment_rate 
+    FROM vista v
+    JOIN datamart.gender g ON g.genero = v.genero
+    JOIN  datamart.date d ON d.fecha = v.fecha  
+    JOIN datamart.site s ON s.canton = v.canton
+    JOIN datamart.crime c ON c.delito = v.tipo_delito
+    GROUP BY s.id_site, c.id_crime, g.id_gender, v.fecha;  
+END;
+$$;
+
+call InsertFactToDatamart();
