@@ -43,7 +43,7 @@ FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documen
 DELIMITER ',' 
 CSV HEADER;
 
-update inec_temp set canton = 'sarchi' where canton = 'sarch&#205;';
+update inec_temp set provincia_canton = 'sarchi' where provincia_canton = 'sarch&#205;';
 
 
 UPDATE OIJ_TEMP
