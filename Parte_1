@@ -177,10 +177,9 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
 INSERT INTO OIJ_INEC.cantones (nombre, id_provincia)
-SELECT canton, ID_Provincia
+SELECT distinct canton, ID_Provincia
 FROM oij_temp, OIJ_INEC.provincias
-where provincia = OIJ_INEC.provincias.nombre_provincia
-on conflict do nothing;
+where provincia = OIJ_INEC.provincias.nombre_provincia;
 END;
 $$;
 
