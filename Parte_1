@@ -43,6 +43,9 @@ FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documen
 DELIMITER ',' 
 CSV HEADER;
 
+update inec_temp set canton = 'sarchi' where canton = 'sarch&#205;';
+
+
 UPDATE OIJ_TEMP
 SET canton = TRIM(LOWER(canton));
 
@@ -144,20 +147,6 @@ create table  OIJ_INEC.porcentajes (
 );
 
 
--- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
-no coinciden con ningún cantón del conjunto de datos del Inec. --
-
-SELECT DISTINCT
-    c.nombre AS canton
-FROM oij_inec.Cantones c
-WHERE NOT EXISTS (
-    SELECT 1 
-    FROM INEC_TEMP it
-    WHERE c.nombre=it.provincia_canton
-)
-
-AND LOWER(c.nombre) NOT LIKE '%provincia%'
-AND LOWER(c.nombre) NOT LIKE '%costa rica%';
 
 
 
@@ -203,7 +192,7 @@ call InsertNacionalidadesToOIJ_INEC();
 
 -- Cantón que hacía falta insertar en la tabla cantones --
 insert into oij_inec.Cantones(nombre, Id_provincia) values
-('valverde vega', 2)
+('valverde vega', 2);
 
 
 CREATE OR REPLACE PROCEDURE InsertGeneroToOIJ_INEC()
@@ -334,3 +323,20 @@ END;
 $$;
 
 call InsertDelito_cometidoToOIJ_INEC();
+
+-- Un comando que devuelva la lista de cantones del conjunto de datos del OIJ que
+--no coinciden con ningún cantón del conjunto de datos del Inec. --
+
+SELECT DISTINCT
+    c.nombre AS canton
+FROM oij_inec.Cantones c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM INEC_TEMP it
+    WHERE c.nombre=it.provincia_canton
+)
+
+AND LOWER(c.nombre) NOT LIKE '%provincia%'
+AND LOWER(c.nombre) NOT LIKE '%costa rica%';
+
+
