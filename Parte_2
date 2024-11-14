@@ -52,19 +52,6 @@ UNIQUE (id_crime, fecha, id_gender, id_site)
 
 
 --Procedimientos almacenados
-CREATE OR REPLACE PROCEDURE InsertGenderToDatamart()
-LANGUAGE plpgsql
-AS $$
-BEGIN
-insert into  DATAMART.GENDER (genero)
-	select tipo from oij_inec.genero
-	on conflict do nothing;
-END;
-$$;
-
-call InsertGenderToDatamart();
-
-
 CREATE OR REPLACE PROCEDURE InsertDateToDatamart()
 LANGUAGE plpgsql
 AS $$
@@ -79,8 +66,7 @@ BEGIN
                 EXTRACT(DAY FROM fecha_val),
                 EXTRACT(MONTH FROM fecha_val),
                 EXTRACT(YEAR FROM fecha_val)
-            )
-            ON CONFLICT (Fecha) DO NOTHING; 
+            ); 
         END;
     END LOOP;
 END;
@@ -88,30 +74,31 @@ $$;
 
 call InsertDateToDatamart();
 
+
+
 CREATE OR REPLACE PROCEDURE InsertSiteToDatamart()
 LANGUAGE plpgsql
 AS $$
 BEGIN
     INSERT INTO DATAMART.Site (provincia, canton, latitud, longitud)
-    SELECT p.nombre_provincia, c.nombre, co.latitud, co.longitud
+    SELECT distinct p.nombre_provincia, c.nombre, co.latitud, co.longitud
     FROM  oij_inec.provincias p
     JOIN oij_inec.cantones c ON p.id_provincia = c.id_provincia
 	left join coordenadas_cantones_temp co on p.nombre_provincia = co.provincia
-	and c.nombre = co.canton
-    ON CONFLICT (canton) DO NOTHING; 
+	and c.nombre = co.canton; 
 END;
 $$;
 
 call InsertSiteToDatamart();
+
 
 CREATE OR REPLACE PROCEDURE InsertCrimeToDatamart()
 LANGUAGE plpgsql
 AS $$
 BEGIN
 	INSERT INTO DATAMART.CRIME (delito)
-	SELECT d.tipo_delito
-	FROM oij_inec.delito d
-	ON CONFLICT (delito) DO NOTHING;
+	SELECT distinct d.tipo_delito
+	FROM oij_inec.delito d;
 END;
 $$;
 
