@@ -35,6 +35,9 @@ CSV HEADER;
 ALTER TABLE oij_temp
 DROP COLUMN distrito;
 
+
+update oij_temp set canton = 'sarchi' where canton = 'sarch&#205;';
+
 COPY inec_temp 
 FROM 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\PostgreSQL 16\Documentation\inec.csv' 
 DELIMITER ',' 
@@ -197,8 +200,6 @@ $$;
 
 call InsertNacionalidadesToOIJ_INEC();
 
-
-update oij_inec.cantones set nombre = 'sarchi' where nombre = 'sarch&#205;'
 
 -- Cantón que hacía falta insertar en la tabla cantones --
 insert into oij_inec.Cantones(nombre, Id_provincia) values
