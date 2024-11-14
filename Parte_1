@@ -59,6 +59,12 @@ UPDATE inec_TEMP
 SET provincia_canton = TRANSLATE(provincia_canton, 'áéíóúÁÉÍÓÚñ', 'aeiouAEIOUn');
 
 
+--select con los join para verificar que en las tablas temp sean 47476, aunque para que sean todos los datos completos se debe hacer un full outer join
+
+select ot.*, it.*
+from oij_temp ot
+left join inec_temp it on ot.canton = it.provincia_canton;
+
 --1.2
 CREATE SCHEMA OIJ_INEC;
 
