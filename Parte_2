@@ -118,26 +118,18 @@ call InsertCrimeToDatamart();
 
 
 
-CREATE VIEW vista AS
-SELECT 
-    AVG(p.tasa_ocupacion) AS avg_tasa_ocupacion, 
-    SUM(dc.id_delitocometido) AS total_delitos, 
-    d.tipo_delito, 
-    c.nombre AS canton, 
-    dc.fecha, 
-    h.tipo AS genero
-FROM 
-    oij_inec.porcentajes p
-FULL OUTER JOIN 
-    oij_inec.cantones c ON p.id_canton = c.id_canton
-FULL OUTER JOIN 
-    oij_inec.delito_cometido dc ON dc.id_canton = c.id_canton
-JOIN 
-    oij_inec.delito d ON d.id_delito = dc.id_delito
-JOIN 
-    oij_inec.genero h ON dc.id_genero = h.id_genero
+CREATE OR REPLACE VIEW vista AS
+SELECT AVG(p.tasa_ocupacion) AS avg_tasa_ocupacion, 
+    COUNT(dc.id_delitocometido) AS total_delitos, 
+    d.tipo_delito, c.nombre AS canton, dc.fecha, h.tipo AS genero
+FROM oij_inec.porcentajes p
+FULL OUTER JOIN oij_inec.cantones c ON p.id_canton = c.id_canton
+FULL OUTER JOIN oij_inec.delito_cometido dc ON dc.id_canton = c.id_canton
+JOIN oij_inec.delito d ON d.id_delito = dc.id_delito
+JOIN oij_inec.genero h ON dc.id_genero = h.id_genero
 GROUP BY 
     d.tipo_delito, c.nombre, dc.fecha, h.tipo;
+
 
 CREATE OR REPLACE PROCEDURE InsertFactToDatamart()
 LANGUAGE plpgsql
